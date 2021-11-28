@@ -1,0 +1,143 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="background-color: teal; position: sticky; top:0;">
+  <a href="\" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" style="pointer-events: none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentcolor" style="color: white; margin-left: 0.5rem;" class="bi bi-heart-fill" viewBox="0 0 16 16">
+   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+  </svg>
+  <span class="fs-4" style="color: white; margin-left: 1rem;"><b>MOODLE ~ LITE</b><br><strong style="font-size: 20px; color:beige;">Learning Made Easier</strong></span>
+  </a>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="{% url 'home' %}" class="nav-link button1" style="color: white;" aria-current="page">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" style="color: white; margin-left: 0.5rem; margin-right: 0.5rem;" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+            </svg>
+          HOME
+          </a>
+        </li>
+        <li class="nav-item"><a href="{% url 'userpage' %}" class="nav-link button1" style="color: white;">My Profile</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link button1" style="color: white;">Log Out</a></li><br>
+      </ul>
+    </li>
+    <li class="nav-item"><a id="mytime" style="color: white; text-align: right; margin-left: 6.8rem;"></a></li>
+  </ul>
+</header>
+
+  <section style="top: 0; text-align: center;margin-bottom: 7rem;">
+    <p style="color:teal;"><big>Hello {{ user.username }} !! </big></p>
+    <h1 > Welcome to the Dash-Board | <img id="icon" src="../../../static/images/moon.png" alt="moon.png" /> </h1>
+  
+  <br>
+  <a href="{% url 'studentpage' %}"><button class="button button2"> Continue as Student </button> </a><br>
+  <a href="{% url 'teacherpage' %}"><button class="button button2"> Continue as Teacher </button> </a><br>
+  <a href="{% url 'tapage' %}"><button class="button button2"> Continue as TA </button> </a>
+  </section>
+
+
+{% else %}
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="background-color: teal; position: sticky; top:0;">
+    <a href="\" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" style="pointer-events: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentcolor" style="color: white; margin-left: 0.5rem;" class="bi bi-heart-fill" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+    </svg>
+    <span class="fs-4" style="color: white; margin-left: 1rem;"><b>MOODLE ~ LITE</b><br><strong style="font-size: 20px; color:beige;">Learning Made Easier</strong></span>
+    </a>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a href="{% url 'home' %}" class="nav-link button1" style="color: white;" aria-current="page">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" style="color: white; margin-left: 0.5rem; margin-right: 0.5rem;" viewBox="0 0 16 16">
+              <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+              </svg>
+            HOME
+            </a>
+          </li>
+          <li class="nav-item"><a href="{% url 'signupnew' %}" class="nav-link button1" style="color: white;">SignUp</a></li>
+          <li class="nav-item"><a href="{% url 'login' %}" class="nav-link button1" style="color:white;">Login</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a id="mytime" style="color: white; text-align: right; margin-left: 4rem;"></a></li>
+    </ul>
+  </header>
+  <section style="top: 0; text-align: center">
+    <p style="color:teal;">Created by Team BlitzKrig <i class="bi bi-chevron-bar-contract"></i></p>
+    <h1 >WELCOME to MOODLE~LITE | <img id="icon" src="../../../static/images/moon.png" alt="moon.png" /></h1>
+  </section>
+  <br>
+  <section style="top: 0; text-align: center">
+    <h2><b>It's a good day to <strong style="color: cadetblue;">learn</strong> and <strong style="color: cadetblue;">teach</strong>!!</b></h2>
+    <p>Hop on!!</p>
+    <a href="{% url 'login' %}"><button class="button_slide slide_right">Log In</button></a>
+    <a href="{% url 'signupnew' %}"><button class="button_slide slide_left">SignUp</button></a>
+  </section>
+  <br><br>
+  <section style="top: 0; text-align: center;">
+    <h3>Is it your first time here?</h3>
+    <p>Don't worry, we got you covered.</p>
+    <p>You can access the help document <a href="https://docs.google.com/document/d/1AzTD-ndvyg26GUUKS0-5ip-V9fVEkbzclCILzMBpj5g/edit?usp=sharing">here</a></p>
+  </section>
+  
+{% endif %}
+<footer class="nb-footer" style="background-color: teal; margin-top: 11rem;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <p style="text-align: center; margin-top: 0.5rem; color: teal;">
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3">
+          <h2 style="text-align: left; margin-left: 1rem ; color: white;"> Help Center <small><i class="bi bi-info-circle" style="color: white;"></i></small></h2>
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a href="{% url 'home' %}" class="nav-link button2" style="color: white;" aria-current="page">
+              HOME
+              </a>
+            </li>
+            <li class="nav-item"><a href="https://docs.google.com/document/d/1AzTD-ndvyg26GUUKS0-5ip-V9fVEkbzclCILzMBpj5g/edit?usp=sharing" class="nav-link button1" style="color: white;">FAQs</a></li>
+            <li class="nav-item"><a href="{% url 'aboutus' %}" class="nav-link button1" style="color: white;">About</a></li>
+          </ul>
+      </div>
+      <div class="col-md-3">
+        <div>
+          <h2 style="text-align: left; color: white; margin-left: 0rem;">Connect with us <small><i class="bi bi-activity" style="color: white;"></i></small></h2>
+          <ul class="nav nav-pills">
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-facebook fa-lg" style="color: white; margin: 1rem;"></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-twitter fa-lg" style="color: white; margin: 1rem;"></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-google-plus fa-lg" style="color: white; margin: 1rem; "></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-linkedin fa-lg" style="color: white; margin: 1rem;"></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-github fa-lg" aria-hidden="true" style="color: white; margin: 1rem;"></i></a></li>
+            </ul>
+        </div>
+      </div>    
+      <div class="col-md-6">
+        <div>
+          <h2 style="text-align: right; margin-right: 1rem; color: white;">Query & Contact <small><i class="bi bi-question-circle" style="color: white;"></i></small></h2>
+          <p style="color: white; text-align: right; margin-right: 1rem">
+            <i class="bi bi-envelope"> moodle_lite_query@gmail.com </i><br>
+            <i class="bi bi-envelope"> BlitzKrig_Fandom@gmail.com </i><br>
+          </p>  
+        </div>
+      </div>
+    </div>  
+    <div class="row">
+      <p style="text-align: center; color: white;">Copyright © 2021. Team BlitzKrig <i class="bi bi-chevron-bar-contract" style="color: white;"></i></i>
+      </p>
+    </div>
+     
+  </div>
+</footer>
+
+
+{% endblock %}
+

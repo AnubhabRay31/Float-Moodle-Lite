@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+
+{% block title %}StudentDash{% endblock %}
+
+
+{% block content %}
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="background-color: teal; position: sticky; top:0;">
+  <a href="\" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" style="pointer-events: none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentcolor" style="color: white; margin-left: 0.5rem;" class="bi bi-heart-fill" viewBox="0 0 16 16">
+   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+  </svg>
+  <span class="fs-4" style="color: white; margin-left: 1rem;"><b>MOODLE ~ LITE</b><br><strong style="font-size: 20px; color:beige;">Learning Made Easier</strong></span>
+  </a>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="{% url 'home' %}" class="nav-link button1" style="color: white;" aria-current="page">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" style="color: white; margin-left: 0.5rem; margin-right: 0.5rem;" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+            </svg>
+          HOME
+          </a>
+        </li>
+        <li class="nav-item"><a href="{% url 'userpage' %}" class="nav-link button1" style="color: white;">My Profile</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link button1" style="color: white;">Log Out</a></li><br>
+      </ul>
+    </li>
+    <li class="nav-item"><a id="mytime" style="color: white; text-align: right; margin-left: 6.8rem;"></a></li>
+  </ul>
+</header>
+
+
+
+{% if user.is_authenticated %}
+
+  <section style="top: 0; text-align: center;">
+    <p style="color:teal;"><big>Hello {{ user.username }} !! </big></p>
+    <h1 > Welcome to the Student Dash-Board | <img id="icon" src="../../../static/images/moon.png" alt="moon.png" /></h1>
+  </section>
+  <br>
+  <div class="row">
+    <div class="col" style="text-align: right;">
+  <a href="calendar/"><button class="button button1" >Calendar</button></a>
+    </div>
+    <div class="col" style="text-align: left;">
+  <a href="../../privatechat/"><button class="button button3" >Chat</button></a>
+    </div>
+  </div>  
+
+  <hr style="height: 10px; color:teal;" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6" style="margin: 0 auto;">
+            <form method="post">
+                {% csrf_token%}  
+              <h4 style="text-align:center; color: teal;">Course List for which '{{user.username}}' is enrolled in as a student.</h4>
+
+              <br>
+            <ul style="list-style-type: none;">
+              {% for course, role in courses.items %}
+                {% if role == "student" %}
+                  <li>
+                    <div class="mb-3">
+
+                      <hr style="height:4px; color:blue;">
+                      <div class="row">
+                        <div class="col">
+                        {% for co,t in teacher.items %}
+                          {% ifequal co course %}
+                            <label class="form-label"> Teacher is <b style="color:teal;">{{t}}</b></label>
+                          {% endifequal %}
+                        {% endfor %}
+                        </div>
+                        <div class="col" style="text-align:right;">
+                        {% for co,t in total.items %}
+                          {% ifequal co course %}
+                            <i><label class="form-label"> Assignments: Posted = <b style="color:teal;">{{t}}</b>
+                            </label>
+                            </i>
+                          {% endifequal %}
+                        {% endfor %}
+                        {% for co,t in count.items %}
+                          {% ifequal co course %}
+                            <i><label class="form-label"> and submitted = <b style="color:teal;">{{t}}</b></label></i>
+                          {% endifequal %}
+                        {% endfor %}
+                        </div>
+                      </div>  
+                  
+                      <div class="row g-6">
+                        <div class="col-sm-2">
+                          <a href="/mysite/student/{{course}}" ><button type="button" class="button button2">{{course}}</button></a>
+                        </div>
+                        {% for c,p in percent.items %}
+                          {% ifequal c course %}
+                          <div class="col-md-8" style="margin-left: 3rem;">
+                            <label for="name" class="form-label">Percentage of course completed</label>
+                            <div class="progress" style="height: 20px;">
+                             <div class="progress-bar" role="progressbar" style="width: {{p}}% ;" aria-valuenow="{{percent}}"aria-valuemin="0" aria-valuemax="100">  {{p}}% </div>
+                            </div>
+                          </div>
+                          {% endifequal %}
+                        {% endfor %}
+                      </div>
+
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}  
+            </ul>
+            </form>
+        </div>
+    </div>      
+  </div>
+
+
+
+{% else %}
+
+  <section style="text-align: center; margin-bottom: 22.5rem;">
+    <p><b>Sorry <i>STUDENT</i> <strong style="color:red">NOT</strong> logged in😔 </b></p>
+    <p>Come Aboard!! Hurry up and Login OR SignUp if <i>you</i> are a new User </p>
+    <a href="{% url 'login' %}"><button class="button button1">Log In</button></a>
+    <a href="{% url 'signupnew' %}"> <button class="button button2">SignUp </button></a>
+  </section>
+
+{% endif %}
+<footer class="nb-footer" style="background-color: teal; margin-top: 11rem;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <p style="text-align: center; margin-top: 0.5rem; color: teal;">
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3">
+          <h2 style="text-align: left; margin-left: 1rem ; color: white;"> Help Center <small><i class="bi bi-info-circle" style="color: white;"></i></small></h2>
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a href="{% url 'home' %}" class="nav-link button2" style="color: white;" aria-current="page">
+              HOME
+              </a>
+            </li>
+            <li class="nav-item"><a href="https://docs.google.com/document/d/1AzTD-ndvyg26GUUKS0-5ip-V9fVEkbzclCILzMBpj5g/edit?usp=sharing" class="nav-link button1" style="color: white;">FAQs</a></li>
+            <li class="nav-item"><a href="{% url 'aboutus' %}" class="nav-link button1" style="color: white;">About</a></li>
+          </ul>
+      </div>
+      <div class="col-md-3">
+        <div>
+          <h2 style="text-align: left; color: white; margin-left: 0rem;">Connect with us <small><i class="bi bi-activity" style="color: white;"></i></small></h2>
+          <ul class="nav nav-pills">
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-facebook fa-lg" style="color: white; margin: 1rem;"></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-twitter fa-lg" style="color: white; margin: 1rem;"></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-google-plus fa-lg" style="color: white; margin: 1rem; "></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-linkedin fa-lg" style="color: white; margin: 1rem;"></i></a></li>
+              <li class="nav-item"><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-github fa-lg" aria-hidden="true" style="color: white; margin: 1rem;"></i></a></li>
+            </ul>
+        </div>
+      </div>    
+      <div class="col-md-6">
+        <div>
+          <h2 style="text-align: right; margin-right: 1rem; color: white;">Query & Contact <small><i class="bi bi-question-circle" style="color: white;"></i></small></h2>
+          <p style="color: white; text-align: right; margin-right: 1rem">
+            <i class="bi bi-envelope"> moodle_lite_query@gmail.com </i><br>
+            <i class="bi bi-envelope"> BlitzKrig_Fandom@gmail.com </i><br>
+          </p>  
+        </div>
+      </div>
+    </div>  
+    <div class="row">
+      <p style="text-align: center; color: white;">Copyright © 2021. Team BlitzKrig <i class="bi bi-chevron-bar-contract" style="color: white;"></i></i>
+      </p>
+    </div>
+     
+  </div>
+</footer>
+{% endblock %} 

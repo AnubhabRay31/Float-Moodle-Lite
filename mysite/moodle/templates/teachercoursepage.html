@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}TeacherCP{% endblock %}
+
+{% block content %}
+
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="background-color: teal; position: sticky; top:0;">
+  <a href="\" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" style="pointer-events: none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentcolor" style="color: white; margin-left: 0.5rem;" class="bi bi-heart-fill" viewBox="0 0 16 16">
+   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+  </svg>
+  <span class="fs-4" style="color: white; margin-left: 1rem;"><b>MOODLE ~ LITE</b><br><strong style="font-size: 20px; color:beige;">Learning Made Easier</strong></span>
+  </a>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="{% url 'home' %}" class="nav-link button1" style="color: white;" aria-current="page">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" style="color: white; margin-left: 0.5rem; margin-right: 0.5rem;" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+            </svg>
+          HOME
+          </a>
+        </li>
+        <li class="nav-item"><a href="{% url 'userpage' %}" class="nav-link button1" style="color: white;">My Profile</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link button1" style="color: white;">Log Out</a></li><br>
+      </ul>
+    </li>
+    <li class="nav-item"><a id="mytime" style="color: white; text-align: right; margin-left: 6.8rem;"></a></li>
+  </ul>
+</header>
+ 
+
+
+
+{% if user.is_authenticated %}
+  <section style="top: 0; text-align: center;">
+    <p style="color:teal;"><big>Hello {{ user.username }} !! </big></p>
+    <h1 > Welcome to the Teacher Course Page for {{course_code}} | <img id="icon" src="../../../static/images/moon.png" alt="moon.png" /> </h1>
+  </section>
+  <br>
+
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col" style="text-align:right;">
+        <a href="/chat/{{course_code}}"><button class="button button1">Discussion</button></a>
+      </div>
+      <div class="col" style="text-align:center;">
+        <a href="/chat/{{course_code}}/on_off"><button class="button button3">Turn ON/OFF</button></a>
+      </div>
+    </div>
+    <div class="row">
+      {% if course_obj.chat_status %}
+        <div class="col" style="text-align: right;">
+          <label for="name" class="form-label" style="margin-top: 1rem;"> STATUS of Chat</label>
+        </div>
+        <div class="col">  
+          <input type="text" readonly class="form-control" value= "ON" style="margin-top: 0.5rem; text-align:center;">
+        </div>
+        {% else %}
+          <div class="col" style="text-align: right;">
+            <label for="name" class="form-label" style="margin-top: 1rem;"> STATUS of Chat</label>
+          </div>
+          <div class="col">
+              <input type="text" readonly class="form-control" value= "OFF" style="margin-top: 0.5rem; text-align:center;">
+          </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" >
+      <div class="col-md-8" style="text-align:right;">
+      <a href="/mysite/uplda/{{course_code}}/"><button type="button" class="button button2">Upload Assignment</button></a>
+      </div>
+      <div class="col" style="text-align:left;">
+      <a href="/mysite/upldl/{{course_code}}/"><button type="button" class="button button2">Upload Lecture Slides</button></a>
+      </div>
+    </div>
+
+    <div class="row" >
+      <div class="col-md-8" style="text-align:right;">
+      <a href="/mysite/tapriviledge/{{course_code}}/"><button type="button" class="button button1">TA privileges</button></a>
+      </div>
+      <div class="col" style="text-align:left;">
+      <a href="/mysite/upldv/{{course_code}}/"><button type="button" class="button button1">Upload Lecture Video</button></a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<hr style="height:5px; color:teal; opacity:1" />
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <center class="row">
+          <h1><i>Assignments</i></h1>
+        </center>
+
+        <div class="col-md-7" style="margin: 0 auto;">
+            <form method="post">
+                {% csrf_token%}
+                <ul style="list-style-type: none;">
+
+                    {% for assignment in assignments %}
+                        <li>
+                          <hr style="height:5px; color:blue;" />
+                           <div class="mb-3">
+                                <label for="name" class="form-label"><i style="color:red; ">{{assignment.start_time}} to {{assignment.end_time}}</i></label>
+                                <div class="row g-6">
+                                  <div class="col-sm-2">
+                                    <a href="#" style="pointer-events:none; "><button type="button" class="button button2" >{{assignment.title}}</button></a>
+                                  </div>
+                                  <div class="col">
+                                    <a href="/mysite/dnldb/{{course_code}}/{{assignment.title}}"><button type="button" class="button button2" >Download Solutions</button></a>
+                                  </div>
+                                  <div class="col" style="text-align:right;">
+                                    <a href="/mysite/grading/{{course_code}}/{{assignment.title}}" ><button type="button" class="button button2" >Upload grading</button></a>
+                                  </div>
+
+                                  <div class="col" style="text-align:right;">
+                                    <a href="/mysite/uplag/{{course_code}}/{{assignment.title}}" ><button type="button" class="button button2">Upload AutoGrader</button></a>
+                                  </div>
+
+                                </div>
+                                  <div class="row">
+                                   <div class="col-sm-2"> 
+                                   <label for="name" class="form-label" style="margin-top:1rem"><i style="color:teal;">Description :</i></label>
+                                   </div>
+                                   <div class="col">
+                                    <input type="text" readonly class="form-control" value=" {{assignment.description}}" style="margin-top:0.5rem;">
+                                    </div>
+                                   </div>
+                              </div>
+                        </li>
+                    {% endfor %}  
+                </ul>
+            </form>
+          </div>  
+
+
+
+<hr style="height:5px; color:teal; opacity:1" />
+
+
+<div class="container-fluid">
+    <center class="row">
+    <h1><i>Lecture Videos</i></h1>
+  </center>
+  <div class="row">
+      <div class="col-md-7" style="margin: 0 auto;">
+          <ul style="list-style-type: none;">
+            {% load embed_video_tags %}
+            {% for video in videos %}
+                <li>
+                   <hr style="height:5px; color:blue;" />
+                   <div class="mb-3">
+                        <div class="row g-6">
+                          <div class="col-sm-2">
+                            <a href="#" style="pointer-events:none; "><button type="button" class="button button2" >{{video.title}}</button></a>
+                          </div>
+                          <div class="col-sm-2">
+                           <label for="name" class="form-label" style="margin-top:0.5rem;">Description :</label>
+                         </div>
+                           <div class="col">
+                            <input type="text" readonly class="form-control" value=" {{ video.description}}">
+                            </div>
+                           </div>
+                           <div class="row g-6">
+                           {% video video.video_url '50x500' %}
+                        </div>
+                      </div>
+                </li>
+            {% endfor %}  
+        </ul>
+      </div>
+  </div>
+</div>
+
+<hr style="height:5px; color:teal; opacity:1" />
+
+
+  <div class="container-fluid">
+    <center class="row">
+    <h1><i>Lecture Slides</i></h1>
+  </center>
+  <div class="row">
+      <div class="col-md-7" style="margin: 0 auto;">
+          <ul style="list-style-type: none;">
+            {% for lecture in lectures %}
+                <li>
+                   <hr style="height:5px; color:blue;" />
+                   <div class="mb-3">
+                        <div class="row g-6">
+                          <div class="col-sm-2">
+                            <a href="#" style="pointer-events:none; "><button type="button" class="button button2" >{{lecture.title}}</button></a>
+                          </div>
+                          <div class="col" style="text-align:right;">
+                            <a href="{{lecture.uploadl.url}}" download><button type="button" class="button button2" >Download Slides</button></a>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                        <div class="row g-6">
+                          <div class="col-sm-2">
+                           <label class="form-label" style="margin-top:1rem;">Description :</label>
+                         </div>
+                           <div class="col">
+                            <input type="text" readonly class="form-control" value="{{lecture.description}}" style="margin-top:0.5rem;"> 
+                            </div>
+                           </div>
+                        </div>
+                      </div>
+                </li>
+            {% endfor %}  
+        </ul>
+      </div>
+  </div>
+</div>
+
+{% else %}
+  <section>
+    <p><b>Sorry <i>you</i> are <strong style="color:red">NOT</strong> logged in😔 </b></p>
+    <p>Come Aboard!! Hurry up and Login OR SignUp if <i>you</i> are a new User </p>
+    <a href="{% url 'login' %}"><button class="button button1">Log In</button></a>
+    <a href="{% url 'signupnew' %}"> <button class="button button2">SignUp </button></a>
+  </section>
+  
+{% endif %}
+
+ 
+
+
+{% endblock %}

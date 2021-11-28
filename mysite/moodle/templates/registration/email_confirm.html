@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Email{% endblock %}
+
+{% block content %}
+
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="background-color: teal; position: sticky; top:0;">
+        <a href="\" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" style="pointer-events: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentcolor" style="color: white; margin-left: 0.5rem;" class="bi bi-heart-fill" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+        </svg>
+        <span class="fs-4" style="color: white; margin-left: 1rem;"><b>MOODLE ~ LITE</b><br><strong style="font-size: 20px; color:beige;">Learning Made Easier</strong></span>
+        </a>
+
+        <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a href="{% url 'home' %}" class="nav-link button1" style="color: white;" aria-current="page">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" style="color: white; margin-left: 0.5rem; margin-right: 0.5rem;" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+            </svg>
+            HOME
+            </a>
+        </li>
+        <li class="nav-item"><a href="{% url 'signupnew' %}" class="nav-link button1" style="color: white; pointer-events: none; opacity: 0.5;">SignUp</a></li>
+        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link button1" style="color: white; pointer-events: none; opacity:0.5;">Login</a></li>
+        <li class="nav-item"><a href="https://docs.google.com/document/d/1AzTD-ndvyg26GUUKS0-5ip-V9fVEkbzclCILzMBpj5g/edit?usp=sharing" class="nav-link button1" style="color: white;">FAQs</a></li>
+        <li class="nav-item"><a href="{% url 'aboutus' %}" class="nav-link button1" style="color: white;">About</a></li>
+        </ul>
+    </header>
+
+    <section class="divdisplay"  style="top:0; text-align: center;">
+        <p>Please click on the link sent to your E-mail ID to confirm your registration and proceed further</p>
+    </section>
+{% endblock %}

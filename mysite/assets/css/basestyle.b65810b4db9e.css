@@ -1,0 +1,248 @@
+#some-element {
+  border: 1px solid #ccc;
+  display: none;
+  font-size: 10px;
+  margin-top: 10px;
+  padding: 5px;
+  text-transform: uppercase;
+}
+
+#some-div:hover #some-element {
+  display: block;
+}
+
+
+
+
+
+.centered_layout{
+  text-align: center;
+
+}
+ 
+
+.cardanubhab{
+  border: 2px solid #000000;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  background-image: url('https://drive.google.com/uc?export=view&id=1vHl-eJPw9ZI_CHmFk8rFtr_X_CuFi1BR');
+}
+
+.cardanubhab:hover{
+  border: 2px solid white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.cardpraneeth{
+  border: 2px solid #000000;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  background-image: url('https://drive.google.com/uc?export=view&id=1EQcQ-8M6i9BhTVdrO87e7FCGKMVnwf05');
+}
+
+.cardanubhab:hover{
+  border: 2px solid white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  border: 2px solid #00a843;/*green color*/
+
+}
+
+.button1:hover {
+  border-radius: 8px;
+  background-color: #00a843;
+  color: white;
+}
+
+.button2 {
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  border: 2px solid #02aabd;/*blue color*/
+}
+
+.button2:hover {
+  border-radius: 8px;
+  background-color: #02aabd;
+  color: white;
+}
+
+.button3 {
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  border: 2px solid #d44a00;/*red color*/
+}
+
+.button3:hover {
+  border-radius: 8px;
+  background-color: #d44a00;
+  color: white;
+}
+
+.button4 {
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  border: 2px solid #c363f7;/*violet color*/
+}
+
+.button4:hover {
+  border-radius: 8px;
+  background-color: #c363f7;
+  color: white;
+}
+
+#grad3 {/*linear gradient color*/
+  height: 200px;
+  background-color: red; /* For browsers that do not support gradients */
+  background-image: linear-gradient(to bottom right, red, yellow);
+}
+
+#grad2 {/*transparent linear gradient*/
+  height: 200px;
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));
+}
+
+
+
+.grad1 {
+  background: #67b11c;
+  background: linear-gradient(#72c41f, #5c9e19);
+  border: 2px solid #467813;
+  border-radius: 5px;
+  color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 15px 20px;
+}
+
+#con {
+  width: 1024px;
+  height: 670px;
+  background-color: #045375;
+}
+#box1 {
+  float: left;
+  font-size: 25px;
+  width: 388px;
+  height: 477px;
+  /* Changed the background url so that it works */
+  background: url('https://drive.google.com/uc?export=view&id=1yxBzhtwb5gUCQ8JcdyK3_1PoX1UNmRnI') no-repeat center center;
+  background-size: cover;
+  margin-left: 120px;
+  margin-top: 90px;
+}
+/* The CSS below is added to hopefully achieve the effect you're looking for. */
+
+#text1 {
+  display: none;
+}
+#box1:hover #text1 {
+  display: block;
+}
+
+
+
+
+
+
+.hide {
+  display: none;
+}
+    
+.myDIV:hover + .hide {
+  display: block;
+  color: red;
+}
+
+
+
+.image_anubhab{
+  position: relative;
+  width: 455px;
+}
+
+.image_praneeth{
+  position: relative;
+  width: 550px;
+}
+
+.image_img{
+  display: block;
+  width: 100%;
+}
+
+.image_title{
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.image_description{
+  font-size: 1.25em;
+  margin-top: 0.25em;
+}
+
+.image_overlay{
+  position: absolute;
+  top:0 ;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  font-family:'Quicksand',sans-serif ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;  /* <-----------THIS IS VERY IMPORTANT HERE*/
+  transition: opacity 0.25s;
+}
+
+.image_overlay:hover{
+  opacity: 1;
+}
+
+.image_overlay > *{
+  transform: translateY(20px);
+  transition: transform 0.25s;
+}
+
+.image_overlay:hover > *{
+  transform: translateY(0);
+}
+
+.image_overlay_blur{
+  backdrop-filter: blur(5px);
+}
+
+.image_overlay_solidbg{
+  background: #009578;
+}
+
+
+

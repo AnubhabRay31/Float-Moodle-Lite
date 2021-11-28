@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+
+ 
+
+{% block title %}StudentCP{% endblock %}
+
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+
+ <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="background-color: teal; position: sticky; top:0;">
+  <a href="\" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none" style="pointer-events: none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentcolor" style="color: white; margin-left: 0.5rem;" class="bi bi-heart-fill" viewBox="0 0 16 16">
+   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+  </svg>
+  <span class="fs-4" style="color: white; margin-left: 1rem;"><b>MOODLE ~ LITE</b><br><strong style="font-size: 20px; color:beige;">Learning Made Easier</strong></span>
+  </a>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="{% url 'home' %}" class="nav-link button1" style="color: white;" aria-current="page">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" style="color: white; margin-left: 0.5rem; margin-right: 0.5rem;" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+            </svg>
+          HOME
+          </a>
+        </li>
+        <li class="nav-item"><a href="{% url 'userpage' %}" class="nav-link button1" style="color: white;">My Profile</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link button1" style="color: white;">Log Out</a></li><br>
+      </ul>
+    </li>
+    <li class="nav-item"><a id="mytime" style="color: white; text-align: right; margin-left: 6.8rem;"></a></li>
+  </ul>
+</header>
+
+
+
+<section style="top: 0; text-align: center;">
+  <p style="color:teal;"><big>Hello {{ user.username }} !! </big></p>
+  <h1 > Welcome to the Student Course Page for course {{course_code}} | <img id="icon" src="../../../static/images/moon.png" alt="moon.png" /> </h1>
+  <h5 id="mytime"></h5> 
+
+</section>
+<br>
+
+  {%if course_obj.chat_status %}
+    <a href="/chat/{{course_code}}"><button class="button button1" style="margin-left:2rem;">{{course_code}} Discussion</button></a>
+  {%endif%}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7" style="margin: 0 auto;">
+            <div class="mb-3">
+                <label for="name" class="form-label">Percentage of course completed</label>
+            </div>
+            <div class="progress" style="height: 20px;">
+                <div class="progress-bar" role="progressbar" style="width: {{percent}}% ;" aria-valuenow="{{percent}}"aria-valuemin="0" aria-valuemax="100"> {{percent}} % </div>
+           </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<hr style="height: 10px; color:teal;" />
+
+<div class="container-fluid">
+  <center class="row">
+    <h1><i>Assignments</i></h1>
+  </center>
+    <div class="row">
+        <div class="col-md-8" style="margin: 0 auto;">
+            <form method="post">
+                {% csrf_token%}
+                <ul style="list-style-type: none;">
+
+                    <hr style="height:3px; color:blue;" />
+                    {% for assignment, solution in dictionary.items %}
+                        <li>
+                           <div class="mb-3">
+                                <label for="name" class="form-label"> {{assignment.start_time}} to {{assignment.end_time}}</label>
+                                <div class="row g-6">
+                                  <div class="col-sm-2">
+                                    <a href="/mysite/teacher/teachercoursepage" style="pointer-events: none;"><button type="button" class="button button2" >{{assignment.title}}</button></a>
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <a href="{{assignment.uploada.url}}" download><button type="button" class="button button2" >Download Assignment</button></a>
+                                  </div>
+
+                                  {% if solution.status == 0 and solution.start_time < time and time < solution.end_time %}
+                                  <div class="col-sm-2">
+                                    <a href="/mysite/upldb/{{course_code}}/{{solution.solution_for}}"  ><button type="button" class="button button3" >Upload solution</button></a>
+                                  </div>
+                                  <div class="mb-3">
+                                   <label for="name" class="form-label"> STATUS of submission </label>
+                                   <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="inputFirstname" value=" DEADLINE IS {{solution.end_time}}">
+                                    </div>
+                                   </div>
+                                   <div class="mb-3">
+                                   <label for="name" class="form-label">Feedback </label>
+                                   <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="inputFirstname" value="Submit the solution before Deadline!">
+                                    </div>
+                                   </div>
+
+                                  {% elif solution.status == 0 and time > solution.end_time%}
+
+                                  <div class="col-sm-2">
+                                    <a href="/mysite/upldb/{{course_code}}/{{solution.solution_for}}"  ><button type="button" class="button button3" disabled >Upload solution</button></a>
+                                  </div>
+                                  <div class="mb-3">
+                                   <label for="name" class="form-label"> STATUS of submission </label>
+                                   <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="inputFirstname" value="You haven't submitted. DEADLINE IS {{solution.end_time}}">
+                                    </div>
+                                   </div>
+
+                                   {% elif solution.status == 0 and time < solution.start_time%}
+
+                                  <div class="col-sm-2">
+                                    <a href="/mysite/upldb/{{course_code}}/{{solution.solution_for}}"  ><button type="button" class="button button3" disabled >Upload solution</button></a>
+                                  </div>
+                                  <div class="mb-3">
+                                   <label for="name" class="form-label"> STATUS of submission </label>
+                                   <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="inputFirstname" value=" DEADLINE IS {{solution.end_time}}">
+                                    </div>
+                                   </div>
+                                   <div class="mb-3">
+                                   <label for="name" class="form-label">Feedback </label>
+                                   <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control" id="inputFirstname" value="Assignment not opened yet!">
+                                    </div>
+                                   </div>
+
+                                  {% else %}
+                                    <div class="col-sm-2">
+                                        <a href="/mysite/upldb/{{course_code}}/{{solution.solution_for}}"  ><button type="button" style="background-color: lightgreen;" class="button button1" >Upload solution</button></a>
+                                    </div>
+                                    <div class="col-sm-2">
+                                    <a href="{{solution.uploadb.url}}" download><button type="button" class="button button2" >Download Solution</button></a>
+                                    </div>
+                                    {% if assignment.is_ag == 1%}
+                                    <div class="col-sm-2">
+                                        <a href="/mysite/autograde/{{course_code}}/{{assignment.title}}" class="button button1" >Evaluate</button></a>
+                                    </div>
+                                    {% endif %}
+                                    <div class="mb-3">
+                                            <label for="name" class="form-label"> STATUS of submission</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" readonly class="form-control" id="inputFirstname" value="Submitted at {{solution.submit_time}}">
+                                            </div>
+                                    </div>
+                                    {% if solution.grade_status == 0 %}
+                                        <div class="mb-3">
+                                        <label for="name" class="form-label">Grade</label>
+                                        <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control" id="inputFirstname" value=" Not yet graded.">
+                                        </div>
+                                        </div>
+                                        <div class="mb-3">
+                                        <label for="name" class="form-label">Feedback </label>
+                                        <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control" id="inputFirstname" value=" Not yet given.">
+                                        </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="mb-3">
+                                        <label for="name" class="form-label">Grade</label>
+                                        <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control" id="inputFirstname" value=" {{solution.grade}}/{{solution.weightage}}">
+                                        </div>
+                                        </div>
+                                        <div class="mb-3">
+                                        <label for="name" class="form-label">Feedback </label>
+                                        <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control" id="inputFirstname" value=" {{solution.feedback}}">
+                                        </div>
+                                        </div>
+                                    {% endif %}   
+
+                                  {% endif %}
+                                
+                                </div>
+                              </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+    </div>      
+  </div>
+
+  <div class="container-fluid">
+    <center class="row">
+    <h1><i>Lecture Slides</i></h1>
+    <hr style="height:5px;">
+  </center>
+  <div class="row">
+      <div class="col-md-7" style="margin: 0 auto;">
+          <ul style="list-style-type: none;">
+            {% for lecture in lectures %}
+                <li>
+                   <div class="mb-3">
+                        <div class="row g-6">
+                          <div class="col-sm-2">
+                            <a href="#" style="pointer-events:none; "><button type="button" class="button button2" >{{lecture.title}}</button></a>
+                          </div>
+                          <div class="col-sm-2">
+                            <a href="{{lecture.uploadl.url}}" download><button type="button" class="button button2" >Download Slides</button></a>
+                          </div>
+                          <div class="mb-3">
+                           <label for="name" class="form-label">Description :</label>
+                           <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" id="inputFirstname" value=" {{lecture.description}}">
+                            </div>
+                           </div>
+                        </div>
+                      </div>
+                </li>
+            {% endfor %}  
+        </ul>
+      </div>
+  </div>
+</div>
+
+
+
+  <div class="container-fluid">
+    <center class="row">
+    <h1><i>Lecture Videos</i></h1>
+    <hr style="height:5px;">
+  </center>
+  <div class="row">
+      <div class="col-md-7" style="margin: 0 auto;">
+          <ul style="list-style-type: none;">
+            {% load embed_video_tags %}
+            {% for video in videos %}
+                <li>
+                   <div class="mb-3">
+                        <div class="row g-6">
+                          <div class="col-sm-2">
+                            <a href="#" style="pointer-events:none; "><button type="button" class="button button2" >{{video.title}}</button></a>
+                          </div>
+                          <div class="mb-3">
+                           <label for="name" class="form-label">Description :</label>
+                           <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" id="inputFirstname" value=" {{ video.description}}">
+                            </div>
+                           </div>
+                           {% video video.video_url '50x500' %}
+                        </div>
+                      </div>
+                </li>
+            {% endfor %}  
+        </ul>
+      </div>
+  </div>
+</div>
+
+<!--     {% load embed_video_tags %}
+    {% for video in videos %}
+    <h4>{{video.title}}</h4>
+    <p>{{ video.description | linebreaks }}</p>
+
+    <h3>Here is the video:</h3>
+    {% video video.video_url 'tiny' %}
+
+    {% endfor %} -->
+
+  <style>
+
+  .card {
+  margin-left: 50%;
+  width: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),
+             0 6px 20px 0 rgba(0,0,0,0.39);
+  background: lightpink;
+  margin-bottom : 5%;
+  border-radius: 25px;
+  padding : 2%;
+  overflow: auto;
+  resize: both;
+  text-overflow: ellipsis;
+  }
+
+  .card:hover{
+    background: lightblue;
+  }
+
+/*  .submit_form{
+
+    text-align: center;
+    padding: 3%;
+    background: pink;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4),
+                0 6px 20px 0 rgba(0,0,0,0.36);
+  }*/
+  </style>
+
+<div class="container-fluid">
+
+  <center class="row">
+    <h1><i>TODO LIST</i></h1>
+    <hr style="height:5px;">
+  </center>
+
+  <div class="row">
+
+    <div class="col-md-8">
+
+      {% for i in todo %}
+      <div class="card">
+        <center><b>{{i.solution_for}}</b></center>
+        <hr/>
+        Deadline : <h3><b>{{i.end_time}}</b></h3>
+        <hr/>
+        Weightage : {{i.weightage}}
+        <br />
+        <br />
+      </div>
+      {% endfor%}
+    </div>
+  </div>
+</div>
+</div>
+
+{% else %}
+  <section>
+    <p><b>Sorry <i>you</i> are <strong style="color:red">NOT</strong> logged in😔 </b></p>
+    <p>Come Aboard!! Hurry up and Login OR SignUp if <i>you</i> are a new User </p>
+    <a href="{% url 'login' %}"><button class="button button1">Log In</button></a>
+    <a href="{% url 'signupnew' %}"> <button class="button button2">SignUp </button></a>
+  </section>
+  
+{% endif %}
+
+
+{% endblock %}  
