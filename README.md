@@ -168,8 +168,8 @@ Give credit here.
 
 ## Contact
 
--	200050010@iitb.ac.in
--	200050020@iitb.ac.in
--	200050028@iitb.ac.in
--	200050112@iitb.ac.in
+-	Anubhab Ray    -> 200050010@iitb.ac.in
+-	Bale Teja      -> 200050020@iitb.ac.in
+-	Mani Praneeth  -> 200050028@iitb.ac.in
+-	Puli Janaki    -> 200050112@iitb.ac.in
 
